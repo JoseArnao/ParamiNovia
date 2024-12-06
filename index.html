@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perdón</title>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+      background-color: #ffffff;
+      
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 200px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    button {
+      min-width: 130px;
+      height: 40px;
+      color: #fff;
+      padding: 5px 10px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      outline: none;
+      border-radius: 5px;
+      z-index: 0;
+      background: #fff;
+      overflow: hidden;
+      border: 2px solid #57cc99;
+      color: #57cc99;
+      margin: 5px;
+    }
+
+    button:hover {
+      color: #fff;
+    }
+
+    button:hover:after {
+      width: 100%;
+      height: 100%;
+    }
+
+    button:after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      transition: all 0.3s ease;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      background: #57cc99;
+    }
+
+    #siButton.clicked {
+      width: 130px;
+      height: 40px;
+      color: #fff;
+      background: #57cc99;
+      transform: scale(1.5);
+    }
+
+    #mediaContainer {
+      display: none;
+      text-align: center;
+    }
+
+    #mediaContainer img {
+      max-width: 100%;
+      max-height: 200px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h2>¿Podemos arreglar las cosas mi amor?</h2>
+  
+  <button id="siButton" onclick="mostrarMensaje()">Sí</button>
+  <button id="noButton" onclick="mostrarMedia()">No</button>
+
+  <div id="mediaContainer">
+    <img id="displayedImage" alt="">
+    <audio id="audio" autoplay>
+      <source src="audio/somewhere only we know (Gustixa & Rhianne).mp3" type="audio/mp3">
+      Tu navegador no soporta el elemento de audio.
+    </audio>
+  </div>
+ 
+  <script>
+    var crecimientoActual = 0;
+    var currentImageIndex = 0;
+    var imageUrls = [
+      "img/de2c0f5ad5033b598b91510142ca88c4.gif",
+      "img/2.jpg",
+      "img/3.jpg",
+      "img/4.jpg",
+      "img/5.jpg",
+    ];
+
+    var intervalId;  // Variable para almacenar el identificador del intervalo
+
+    function mostrarMensaje() {
+      window.location.href = "Te_Amo.html";
+    }
+
+    function cambiarImagen() {
+      var displayedImage = document.getElementById("displayedImage");
+      displayedImage.src = imageUrls[currentImageIndex];
+      currentImageIndex = (currentImageIndex + 1) % imageUrls.length;
+    }
+
+    function agrandarBoton() {
+      var siButton = document.getElementById("siButton");
+      crecimientoActual += 5;
+      siButton.style.width = 130 + crecimientoActual + "px";
+      siButton.style.height = 40 + crecimientoActual + "px";
+      siButton.classList.add("clicked");
+      setTimeout(function() {
+        siButton.classList.remove("clicked");
+      }, 500);
+    }
+
+    function mostrarMedia() {
+      var mediaContainer = document.getElementById("mediaContainer");
+      var audio = document.getElementById("audio");
+
+      // Detener el intervalo de cambio automático de imágenes
+      clearInterval(intervalId);
+
+      mediaContainer.style.display = "block";
+      agrandarBoton();
+      cambiarImagen();
+
+      // Reproducir el audio automáticamente
+      audio.play();
+
+      // Cambiar automáticamente la imagen cada 3 segundos
+      intervalId = setInterval(cambiarImagen, 10000);
+    }
+  </script>
+</body>
+</html>
+

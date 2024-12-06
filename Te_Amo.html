@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Te Amo</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffffff; /* Fondo blanco suave */
+        }
+
+        .heart {
+            --size: 100px; /* Adjust the size as needed */
+            --color: red;
+            transform: rotate(45deg);
+            animation: beat 1s infinite alternate ease-in-out;
+            cursor: pointer; /* Agregamos un cursor de puntero para indicar que se puede hacer clic */
+        }
+
+        @keyframes beat {
+            to {
+                transform: rotate(45deg) scale(0.8); /* Adjust the scale as needed */
+            }
+        }
+
+        .heart,
+        .heart::before,
+        .heart::after {
+            width: var(--size);
+            height: var(--size);
+            background: var(--color);
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            display: block;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            margin-top: calc(var(--size) * -0.5);
+        }
+
+        .heart::after {
+            margin-top: calc(var(--size) * -0.5);
+            margin-left: calc(var(--size) * -0.5);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px; /* Reduce the space between the image and the text */
+        }
+
+        h2 {
+            font-size: 18px; /* Adjust the font size as needed */
+            color: #333; /* Color de texto oscuro */
+            text-align: center;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        @media (min-width: 600px) {
+            /* Adjust styles for larger screens if needed */
+            .heart {
+                --size: 150px; /* Adjust the size as needed */
+            }
+
+            h2 {
+                font-size: 24px; /* Adjust the font size as needed */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="heart"></div>
+    <br>
+    <img src="img/a53054639df3a2e59520ba089a8544fd.gif" alt="">
+    <h2 id="phrases">¡Gracias por perdonarme, amor! Te amo</h2>
+
+    <!-- Agrega un elemento de audio con la música que desees -->
+    <audio id="audio" autoplay>
+        <source src="audio/Vance Joy - Riptide (Lyrics).mp3" type="audio/mp3">
+        
+    </audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Selecciona el elemento de audio
+            var audio = document.getElementById('audio');
+            var phrases = ["Te amo mucho", "Perdon por estos malos momentos", "Pero quiero estar bien contigo", "Tu me importas mucho", "Y te quiero conmigo siempre", "Mi niña Preciosa", "<3"];
+
+            var currentPhraseIndex = 0;
+
+            // Function to update the content of h2 with a fade-in effect
+            function updatePhrase() {
+                var h2 = document.getElementById('phrases');
+                h2.style.opacity = 0;
+                setTimeout(function () {
+                    h2.textContent = phrases[currentPhraseIndex];
+                    h2.style.opacity = 1;
+                }, 500);
+            }
+
+            // Initial update
+            updatePhrase();
+
+            // Function to cycle through phrases automatically
+            function autoChangePhrase() {
+                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+                updatePhrase();
+            }
+
+            // Agrega un evento para cambiar el color del corazón al hacer clic
+            document.querySelector('.heart').addEventListener('click', function () {
+                var heart = document.querySelector('.heart');
+                var currentColor = getComputedStyle(heart).getPropertyValue('--color');
+
+                // Cambiamos el color del corazón
+                heart.style.setProperty('--color', currentColor === 'red' ? 'blue' : 'red');
+            });
+
+            // Agrega un evento para iniciar la reproducción de la música al cargar la página
+            document.addEventListener('click', function () {
+                audio.play();
+            });
+
+            // Set interval to automatically change phrases every 5 seconds
+            setInterval(autoChangePhrase, 5000);
+        });
+    </script>
+</body>
+
+</html>
+
+
